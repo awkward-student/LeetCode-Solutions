@@ -1,44 +1,34 @@
 /*
- *
- * #1579. Remove Max Number of Edges to Keep Graph Fully Traversable
- *
- *
+# 1579. Remove Max Number of Edges to Keep Graph Fully Traversable
+
 
 Alice and Bob have an undirected graph of n nodes and three types of edges:
 
 Type 1: Can be traversed by Alice only.
 Type 2: Can be traversed by Bob only.
 Type 3: Can be traversed by both Alice and Bob.
-Given an array edges where edges[i] = [typei, ui, vi] represents a bidirectional edge of type typei between nodes ui and vi, find the maximum number of edges you can remove so that after removing the edges, the graph can still be fully traversed by both Alice and Bob. The graph is fully traversed by Alice and Bob if starting from any node, they can reach all other nodes.
+
+Given an array edges where edges[i] = [typei, ui, vi] represents a bidirectional edge of type typei between nodes ui and vi, find the maximum number of edges you can remove so that after removing the edges, the graph can still be fully traversed by both Alice and Bob. 
+The graph is fully traversed by Alice and Bob if starting from any node, they can reach all other nodes.
 
 Return the maximum number of edges you can remove, or return -1 if Alice and Bob cannot fully traverse the graph.
-
  
 
 Example 1:
-
-
-
 Input: n = 4, edges = [[3,1,2],[3,2,3],[1,1,3],[1,2,4],[1,1,2],[2,3,4]]
 Output: 2
 Explanation: If we remove the 2 edges [1,1,2] and [1,1,3]. The graph will still be fully traversable by Alice and Bob. Removing any additional edge will not make it so. So the maximum number of edges we can remove is 2.
+
 Example 2:
-
-
-
 Input: n = 4, edges = [[3,1,2],[3,2,3],[1,1,4],[2,1,4]]
 Output: 0
 Explanation: Notice that removing any edge will not make the graph fully traversable by Alice and Bob.
+
 Example 3:
-
-
-
 Input: n = 4, edges = [[3,2,3],[1,1,2],[2,3,4]]
 Output: -1
 Explanation: In the current graph, Alice cannot reach node 4 from the other nodes. Likewise, Bob cannot reach 1. Therefore it's impossible to make the graph fully traversable.
- 
-
- 
+  
 
 Constraints:
 
@@ -53,57 +43,60 @@ All tuples (typei, ui, vi) are distinct.
 
 
 
+
+
 class Solution {
-   public int maxNumEdgesToRemove(int n, int[][] edges) {
-    Arrays.sort(edges, (a, b) -> b[0] - a[0]);
-    UF A = new UF(n);
-    UF B = new UF(n);
-    int res = 0;
-    for(int[] edge : edges){
-        if(edge[0] == 3){
-            //alice and bob
-            boolean a = A.union(edge[1] - 1, edge[2] - 1);
-            boolean b = B.union(edge[1] - 1, edge[2] - 1); 
-            if(!a && !b){
-                res++;
-            }
-        }else if(edge[0] == 2){
-            //bob
-            if(!B.union(edge[1] - 1, edge[2] - 1)){
-                res++;
-            }
-        }else{
-            //alice
-            if(!A.union(edge[1] - 1, edge[2] - 1)){
-                res++;
+    public int maxNumEdgesToRemove(int n, int[][] edges) {
+        Arrays.sort(edges, (a, b) -> b[0] - a[0]);
+        UF A = new UF(n);
+        UF B = new UF(n);
+        int res = 0;
+        for (int[] edge : edges) {
+            if (edge[0] == 3) {
+                // alice and bob
+                boolean a = A.union(edge[1] - 1, edge[2] - 1);
+                boolean b = B.union(edge[1] - 1, edge[2] - 1);
+                if (!a && !b) {
+                    res++;
+                }
+            } else if (edge[0] == 2) {
+                // bob
+                if (!B.union(edge[1] - 1, edge[2] - 1)) {
+                    res++;
+                }
+            } else {
+                // alice
+                if (!A.union(edge[1] - 1, edge[2] - 1)) {
+                    res++;
+                }
             }
         }
-    }
-    return B.united() && A.united() ? res : -1;
+        return B.united() && A.united() ? res : -1;
     }
 
 }
 
-class UF{
+class UF {
     int count;
     int[] arr;
-    public UF(int n){
+
+    public UF(int n) {
         count = n;
         arr = new int[n];
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             arr[i] = i;
         }
     }
 
-    int find(int a){
-        if(a != arr[a]){
+    int find(int a) {
+        if (a != arr[a]) {
             arr[a] = find(arr[a]);
         }
         return arr[a];
     }
 
-    boolean union(int a, int b){
-        if(find(a) != find(b)){
+    boolean union(int a, int b) {
+        if (find(a) != find(b)) {
             arr[find(a)] = find(b);
             count--;
             return true;
@@ -111,7 +104,7 @@ class UF{
         return false;
     }
 
-    boolean united(){
+    boolean united() {
         return count == 1;
     }
 }
