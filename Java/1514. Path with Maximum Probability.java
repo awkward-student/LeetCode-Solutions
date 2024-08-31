@@ -7,6 +7,7 @@ You are given an undirected weighted graph of n nodes (0-indexed), represented b
 Given two nodes start and end, find the path with the maximum probability of success to go from start to end and return its success probability.
 
 If there is no path from start to end, return 0. Your answer will be accepted if it differs from the correct answer by at most 1e-5.
+ 
 
 Example 1:
 Input: n = 3, edges = [[0,1],[1,2],[0,2]], succProb = [0.5,0.5,0.2], start = 0, end = 2
