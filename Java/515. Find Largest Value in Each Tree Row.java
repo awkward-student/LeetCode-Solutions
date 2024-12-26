@@ -1,6 +1,7 @@
 /*
 # 515. Find Largest Value in Each Tree Row
 
+
 Given the root of a binary tree, return an array of the largest value in each row of the tree (0-indexed).
 
 Example 1:
@@ -11,9 +12,7 @@ Example 2:
 Input: root = [1,2,3]
 Output: [1,3]
  
-
 Constraints:
-
 The number of nodes in the tree will be in the range [0, 104].
 -231 <= Node.val <= 231 - 1
 */
@@ -21,38 +20,45 @@ The number of nodes in the tree will be in the range [0, 104].
 
 
 
+
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
+ * int val;
+ * TreeNode left;
+ * TreeNode right;
+ * TreeNode() {}
+ * TreeNode(int val) { this.val = val; }
+ * TreeNode(int val, TreeNode left, TreeNode right) {
+ * this.val = val;
+ * this.left = left;
+ * this.right = right;
+ * }
  * }
  */
 
 class Solution {
-  public List<Integer> largestValues(TreeNode root) {
-    List<Integer> ans = new ArrayList<>();
-    dfs(root, 0, ans);
-    return ans;
-  }
+    public List<Integer> largestValues(TreeNode root) {
+        if (root == null)
+            return new ArrayList<>();
 
-  private void dfs(TreeNode root, int depth, List<Integer> ans) {
-    if (root == null)
-      return;
-    if (depth + 1 > ans.size())
-      ans.add(root.val);
-    else
-      ans.set(depth, Math.max(ans.get(depth), root.val));
+        List<Integer> ans = new ArrayList<>();
+        Queue<TreeNode> q = new ArrayDeque<>(List.of(root));
 
-    dfs(root.left, depth + 1, ans);
-    dfs(root.right, depth + 1, ans);
-  }
+        while (!q.isEmpty()) {
+            int mx = Integer.MIN_VALUE;
+            for (int sz = q.size(); sz > 0; --sz) {
+                TreeNode node = q.poll();
+                mx = Math.max(mx, node.val);
+                if (node.left != null)
+                    q.offer(node.left);
+                if (node.right != null)
+                    q.offer(node.right);
+            }
+            ans.add(mx);
+        }
+
+        return ans;
+    }
 }
