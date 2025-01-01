@@ -1,9 +1,11 @@
 /*
 # 1422. Maximum Score After Splitting a String
 
-Given a string s of zeros and ones, return the maximum score after splitting the string into two non-empty substrings (i.e. left substring and right substring).
 
-The score after splitting a string is the number of zeros in the left substring plus the number of ones in the right substring. 
+Given a string s of zeros and ones, return the maximum score after splitting the string into two non-empty substrings 
+(i.e. left substring and right substring).
+
+The score after splitting a string is the number of zeros in the left substring plus the number of ones in the right substring.
 
 Example 1:
 Input: s = "011101"
@@ -25,9 +27,7 @@ Example 3:
 Input: s = "1111"
 Output: 3
  
-
 Constraints:
-
 2 <= s.length <= 500
 The string s consists of characters '0' and '1' only.
 */
@@ -37,19 +37,19 @@ The string s consists of characters '0' and '1' only.
 
 
 class Solution {
-  public int maxScore(String s) {
-    int ans = 0;
-    int zeros = 0;
-    int ones = (int) s.chars().filter(c -> c == '1').count();
+    public int maxScore(String s) {
+        int ans = 0;
+        int zeros = 0;
+        int ones = (int) s.chars().filter(c -> c == '1').count();
 
-    for (int i = 0; i + 1 < s.length(); ++i) {
-      if (s.charAt(i) == '0')
-        ++zeros;
-      else
-        --ones;
-      ans = Math.max(ans, zeros + ones);
+        for (int i = 0; i + 1 < s.length(); ++i) {
+            if (s.charAt(i) == '0')
+                ++zeros;
+            else
+                --ones;
+            ans = Math.max(ans, zeros + ones);
+        }
+
+        return ans;
     }
-
-    return ans;
-  }
 }
