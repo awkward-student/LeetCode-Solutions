@@ -11,7 +11,6 @@ nums[u] = nums[u] XOR k
 nums[v] = nums[v] XOR k
 Return the maximum possible sum of the values Alice can achieve by performing the operation any number of times.
 
- 
 Example 1:
 Input: nums = [1,2,1], k = 3, edges = [[0,1],[0,2]]
 Output: 6
@@ -33,9 +32,7 @@ Input: nums = [7,7,7,7,7,7], k = 3, edges = [[0,1],[0,2],[0,3],[0,4],[0,5]]
 Output: 42
 Explanation: The maximum achievable sum is 42 which can be achieved by Alice performing no operations.
  
-
 Constraints:
-
 2 <= n == nums.length <= 2 * 104
 1 <= k <= 109
 0 <= nums[i] <= 109
@@ -44,6 +41,7 @@ edges[i].length == 2
 0 <= edges[i][0], edges[i][1] <= n - 1
 The input is generated such that edges represent a valid tree.
 */
+
 
 
 
